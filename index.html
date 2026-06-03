@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Digital Identity System — Republic of the Congo</title>
+<meta name="description" content="Phase One concept: a trusted foundational identity layer for anti-fraud passport issuance, efficient public services, and measurable fiscal return.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#15294d; --navy2:#1f3864; --blue:#2e75b6; --blue-soft:#dceaf4;
+  --gold:#b8860b; --gold-soft:#f6edd4; --green:#2e6b3e; --green-soft:#e7f1e8;
+  --ink:#1b2233; --muted:#5a6378; --line:#d9dee8; --paper:#fbfcfe; --paper2:#f3f6fb;
+  --maxw:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Archivo',system-ui,sans-serif; color:var(--ink); background:var(--paper);
+  line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;}
+::selection{background:var(--gold);color:#fff}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px clamp(20px,5vw,56px);
+  background:rgba(251,252,254,.0); backdrop-filter:blur(0px);
+  transition:background .4s ease, backdrop-filter .4s ease, box-shadow .4s ease, padding .3s ease;
+}
+.nav.scrolled{ background:rgba(251,252,254,.88); backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 var(--line); padding-top:10px; padding-bottom:10px; }
+.nav .brand{display:flex;align-items:center;gap:11px;font-weight:600;letter-spacing:.02em;font-size:14px;color:var(--navy);opacity:0;transition:opacity .4s,color .4s}
+.nav.scrolled .brand{opacity:1}
+.nav .brand .mark{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--navy),var(--blue));display:grid;place-items:center;color:#fff;font-family:'Fraunces';font-weight:600;font-size:15px}
+.nav .links{display:flex;gap:6px;align-items:center}
+.nav .links span{
+  font-size:13px;color:var(--navy);padding:7px 13px;border-radius:8px;
+  font-weight:500;opacity:.78; letter-spacing:.01em; cursor:default;
+}
+.nav.scrolled .links span{color:var(--ink)}
+.nav .links span.cta{background:var(--navy);color:#fff;opacity:1}
+@media(max-width:760px){.nav .links span:not(.cta){display:none}}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative; min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+  padding:120px clamp(20px,5vw,56px) 80px; overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(46,117,182,.18), transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(184,134,11,.10), transparent 50%),
+    linear-gradient(180deg,#0e1b34 0%, #15294d 55%, #1b3258 100%);
+  color:#fff;
+}
+.hero .grid-tex{position:absolute;inset:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:54px 54px; mask-image:radial-gradient(120% 90% at 70% 10%,#000,transparent 75%);}
+.hero .inner{position:relative;max-width:var(--maxw);margin:0 auto;width:100%}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:#a8c6e6;font-weight:600;margin-bottom:26px}
+.kicker::before{content:"";width:30px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(40px,7vw,82px);line-height:1.02;font-weight:600;letter-spacing:-.02em;max-width:14ch}
+.hero h1 em{font-style:italic;color:#f0d488}
+.hero .sub{font-size:clamp(17px,2.2vw,21px);color:#c7d4e6;max-width:54ch;margin-top:28px;line-height:1.55}
+.hero .meta{display:flex;flex-wrap:wrap;gap:14px 34px;margin-top:46px;padding-top:30px;border-top:1px solid rgba(255,255,255,.14);max-width:680px}
+.hero .meta div{font-size:13.5px;color:#9fb2cb}
+.hero .meta b{display:block;color:#fff;font-weight:600;font-size:14.5px;margin-bottom:2px;letter-spacing:.01em}
+.scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#7e93b3;font-size:11px;letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2.4s ease-in-out infinite}
+.scrollcue span{width:1px;height:34px;background:linear-gradient(var(--gold),transparent)}
+@keyframes bob{50%{transform:translate(-50%,7px)}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.hero .reveal{transition-delay:var(--d,0s)}
+
+/* ---------- SECTION SHELL ---------- */
+section.block{padding:clamp(70px,9vw,120px) clamp(20px,5vw,56px);position:relative}
+.wrap{max-width:var(--maxw);margin:0 auto}
+.sec-num{font-family:'Fraunces';font-size:14px;color:var(--gold);font-weight:600;letter-spacing:.08em;margin-bottom:14px}
+.sec-h{font-size:clamp(28px,4.2vw,46px);font-weight:600;line-height:1.08;letter-spacing:-.018em;color:var(--navy);max-width:18ch}
+.lead{font-size:clamp(17px,2vw,20px);line-height:1.6;color:var(--ink);max-width:60ch;margin-top:22px;font-weight:400}
+.lead.em{color:var(--navy);font-family:'Fraunces';font-style:italic;font-weight:500}
+.body-p{font-size:16px;line-height:1.7;color:var(--muted);max-width:62ch;margin-top:16px}
+.alt{background:var(--paper2)}
+.alt-navy{background:linear-gradient(180deg,#15294d,#1b3258);color:#fff}
+.alt-navy .sec-h{color:#fff}.alt-navy .lead{color:#cdd9ea}.alt-navy .body-p{color:#a9bbd4}
+
+/* divider */
+.rule{height:1px;background:var(--line);max-width:var(--maxw);margin:0 auto}
+
+/* ---------- DELIVERS / FEATURE CARDS ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:18px;margin-top:48px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px 24px;transition:transform .4s cubic-bezier(.2,.7,.3,1),box-shadow .4s,border-color .4s;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--blue);transform:scaleY(0);transform-origin:top;transition:transform .4s}
+.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px -22px rgba(21,41,77,.35);border-color:var(--blue-soft)}
+.card:hover::before{transform:scaleY(1)}
+.card .ic{width:42px;height:42px;border-radius:11px;background:var(--blue-soft);color:var(--navy);display:grid;place-items:center;margin-bottom:16px}
+.card .ic svg{width:22px;height:22px}
+.card h3{font-size:18px;color:var(--navy);font-weight:600;letter-spacing:-.01em;margin-bottom:7px;line-height:1.25}
+.card p{font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* ---------- MINISTER ---------- */
+.minister{display:grid;grid-template-columns:1.1fr 1fr;gap:54px;align-items:start;margin-top:50px}
+@media(max-width:820px){.minister{grid-template-columns:1fr;gap:36px}}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:0 24px 60px -40px rgba(21,41,77,.4)}
+.mcard .badge{display:inline-block;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px}
+.mcard h3{font-size:23px;color:var(--navy);line-height:1.15;margin-bottom:4px}
+.mcard .role{font-size:14px;color:var(--muted);margin-bottom:18px;font-weight:500}
+.mcard p{font-size:14.5px;color:var(--muted);line-height:1.6}
+.priorities{list-style:none;margin-top:30px;display:flex;flex-direction:column;gap:14px}
+.priorities li{display:flex;gap:14px;align-items:flex-start}
+.priorities .dot{flex:none;width:30px;height:30px;border-radius:9px;background:var(--green-soft);color:var(--green);display:grid;place-items:center;margin-top:1px}
+.priorities .dot svg{width:16px;height:16px}
+.priorities b{color:var(--navy);font-weight:600;display:block;font-size:15px;margin-bottom:1px}
+.priorities span{font-size:14px;color:var(--muted);line-height:1.5}
+
+/* ---------- PROBLEM ---------- */
+.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:50px;border:1px solid rgba(255,255,255,.16);border-radius:16px;overflow:hidden}
+@media(max-width:760px){.probs{grid-template-columns:1fr}}
+.prob{padding:30px 26px;border-right:1px solid rgba(255,255,255,.13)}
+.prob:last-child{border-right:0}
+@media(max-width:760px){.prob{border-right:0;border-bottom:1px solid rgba(255,255,255,.13)}.prob:last-child{border-bottom:0}}
+.prob .n{font-family:'Fraunces';font-size:34px;color:#f0d488;font-weight:500;line-height:1}
+.prob h3{font-size:18px;color:#fff;margin:14px 0 8px;font-weight:600}
+.prob p{font-size:14px;color:#a9bbd4;line-height:1.6}
+
+/* ---------- HOW / lookup demo ---------- */
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:46px}
+@media(max-width:760px){.layers{grid-template-columns:1fr}}
+.layer{border:1px solid var(--line);border-radius:16px;padding:26px;background:#fff}
+.layer .tag{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--blue);margin-bottom:10px}
+.layer h3{font-size:19px;color:var(--navy);margin-bottom:8px}
+.layer p{font-size:14.5px;color:var(--muted);line-height:1.6}
+
+.demo{margin-top:42px;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 70px -45px rgba(21,41,77,.5);background:#fff}
+.demo .bar{display:flex;align-items:center;gap:8px;padding:13px 18px;background:var(--navy);color:#fff}
+.demo .bar .d{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3)}
+.demo .bar .t{margin-left:10px;font-size:12.5px;letter-spacing:.04em;color:#bcd0e8;font-weight:500}
+.demo .body{padding:26px clamp(18px,3vw,32px) 30px}
+.demo .search{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:11px;padding:11px 15px;background:var(--paper2)}
+.demo .search svg{width:18px;height:18px;color:var(--muted);flex:none}
+.demo .search input{border:0;background:none;font-family:inherit;font-size:15px;color:var(--ink);width:100%;outline:none}
+.demo .hint{font-size:12.5px;color:var(--muted);margin-top:9px}
+.demo .result{margin-top:22px;opacity:0;transform:translateY(10px);transition:.5s;pointer-events:none}
+.demo .result.show{opacity:1;transform:none}
+.rhead{display:flex;align-items:center;gap:15px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.rhead .av{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:grid;place-items:center;font-family:'Fraunces';font-size:21px;font-weight:600}
+.rhead .nm{font-size:18px;color:var(--navy);font-weight:600;font-family:'Fraunces'}
+.rhead .id{font-size:12.5px;color:var(--muted);font-family:'Archivo';letter-spacing:.05em}
+.rhead .vbadge{margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:6px 11px;border-radius:20px}
+.rhead .vbadge svg{width:14px;height:14px}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px;margin-top:2px;background:var(--line);border-radius:0 0 10px 10px;overflow:hidden}
+.rgrid .f{background:#fff;padding:15px 16px}
+.rgrid .f .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:3px}
+.rgrid .f .v{font-size:15px;color:var(--ink);font-weight:500}
+.rgrid .f .v.g{color:var(--green)}
+.modnote{font-size:12.5px;color:var(--muted);margin-top:16px;display:flex;gap:8px;align-items:flex-start}
+.modnote svg{width:15px;height:15px;color:var(--blue);flex:none;margin-top:2px}
+
+/* ---------- MONEY ---------- */
+.money-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:50px}
+.mtile{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:26px 24px;transition:.4s}
+.mtile:hover{background:rgba(255,255,255,.09);transform:translateY(-4px)}
+.mtile .big{font-family:'Fraunces';font-size:30px;font-weight:600;color:#f0d488;line-height:1;margin-bottom:12px}
+.mtile h3{font-size:16px;color:#fff;margin-bottom:7px;font-weight:600}
+.mtile p{font-size:13.5px;color:#a9bbd4;line-height:1.55}
+.money-call{margin-top:40px;background:var(--gold-soft);border-left:4px solid var(--gold);border-radius:0 14px 14px 0;padding:26px 28px}
+.money-call b{color:#7a5908;font-family:'Fraunces';font-size:17px}
+.money-call p{color:#5f4a14;font-size:15px;line-height:1.6;margin-top:8px}
+
+/* ---------- callout ---------- */
+.call{border-radius:0 14px 14px 0;padding:24px 28px;margin-top:36px}
+.call.green{background:var(--green-soft);border-left:4px solid var(--green)}
+.call.blue{background:var(--blue-soft);border-left:4px solid var(--blue)}
+.call b{font-family:'Fraunces';font-size:17px}
+.call.green b{color:var(--green)}.call.blue b{color:var(--navy)}
+.call p{font-size:15px;line-height:1.6;margin-top:7px}
+.call.green p{color:#27502f}.call.blue p{color:#27405e}
+
+/* ---------- roadmap ---------- */
+.steps{margin-top:46px;display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:22px;padding:22px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step .num{flex:none;width:38px;height:38px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:'Fraunces';font-weight:600;font-size:16px}
+.step h3{font-size:16.5px;color:var(--navy);font-weight:600;margin-bottom:3px}
+.step p{font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* ---------- CTA / footer ---------- */
+.final{background:linear-gradient(180deg,#15294d,#0e1b34);color:#fff;text-align:center;padding:clamp(70px,10vw,120px) clamp(20px,5vw,56px)}
+.final h2{font-size:clamp(26px,4vw,42px);font-weight:600;line-height:1.15;max-width:20ch;margin:0 auto;color:#fff}
+.final p{color:#bccbe2;font-size:17px;max-width:54ch;margin:22px auto 0;line-height:1.6}
+.btnrow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:38px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:11px;font-size:15px;font-weight:600;text-decoration:none;transition:.3s;font-family:inherit;border:0;cursor:pointer}
+.btn.gold{background:var(--gold);color:#fff}.btn.gold:hover{background:#cb9a23;transform:translateY(-2px)}
+.btn.ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22)}.btn.ghost:hover{background:rgba(255,255,255,.15)}
+.btn.show-only{cursor:default}
+.btn.gold.show-only:hover{background:var(--gold);transform:none}
+.btn.ghost.show-only:hover{background:rgba(255,255,255,.08)}
+footer{background:#0b1526;color:#7e93b3;text-align:center;padding:34px 20px;font-size:12.5px;line-height:1.7}
+footer .disc{max-width:60ch;margin:0 auto;opacity:.8}
+
+/* progress bar */
+.prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--blue));width:0;z-index:200;transition:width .1s}
+</style>
+</head>
+<body>
+<div class="prog" id="prog"></div>
+
+<nav class="nav" id="nav">
+  <div class="brand"><span class="mark">C</span><span>National Digital Identity System</span></div>
+  <div class="links">
+    <span>Mandate</span>
+    <span>Problem</span>
+    <span>How it works</span>
+    <span>The return</span>
+    <span class="cta">Roadmap</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="grid-tex"></div>
+  <div class="inner">
+    <div class="kicker reveal" style="--d:.05s">Concept Document · Phase One</div>
+    <h1 class="reveal" style="--d:.15s">National Digital <em>Identity</em> System</h1>
+    <p class="sub reveal" style="--d:.3s">A trusted foundational identity layer for the Republic of the Congo — built for anti-fraud passport issuance, efficient public services, and measurable fiscal return.</p>
+    <div class="meta reveal" style="--d:.45s">
+      <div><b>Republic of the Congo</b>Ministry of the Interior &amp; Decentralization</div>
+      <div><b>Phase One</b>Foundational identity + passports</div>
+      <div><b>Status</b>Draft concept for partner discussion</div>
+    </div>
+  </div>
+  <div class="scrollcue">Scroll<span></span></div>
+</header>
+
+<!-- EXEC SUMMARY -->
+<section class="block" id="summary">
+  <div class="wrap">
+    <div class="sec-num reveal">01 — Executive Summary</div>
+    <h2 class="sec-h reveal">Build the foundation once. Connect passports first.</h2>
+    <p class="lead reveal">The Republic of the Congo faces a problem common across the region: identity cannot be reliably verified. This drives passport fraud, slows public services, lets public funds leak through duplicate and fictitious beneficiaries, and erodes confidence in the state.</p>
+    <p class="body-p reveal">This concept proposes a foundational digital identity system — a single, secure, verified identity for each resident, established once and reused by separate government services. Passports plug in first, because passport fraud is the most visible and immediate pain point, and the one the Ministry of the Interior is currently prioritizing publicly. The model reduces fraud and recovers real money for the state from day one.</p>
+
+    <div class="cards">
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+        <h3>Foundational identity register</h3><p>One de-duplicated, biometrically verified identity per person — the trusted source every service checks against.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <h3>Anti-fraud passport module</h3><p>Uses the identity layer to eliminate duplicate and fraudulent applications before they're ever issued.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+        <h3>Per-module person lookup</h3><p>An officer pulls up an individual and sees the information relevant to that service, instantly.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m7 14 3-4 4 3 5-7"/></svg></div>
+        <h3>Ministry oversight dashboards</h3><p>Clear, real-time visibility into volumes, processing times, and fraud caught across the country.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        <h3>AI assistant — typed or spoken</h3><p>Ask questions in natural language and get answers back as text, tables, or charts, in the form you request.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.5V8a2 2 0 0 0-2-2h-7l-2-3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h8"/><path d="m16 19 2 2 4-4"/></svg></div>
+        <h3>Citizen verification loop</h3><p>When the bureau needs more, the system notifies the person to confirm identity or supply missing data securely.</p>
+      </div>
+    </div>
+
+    <div class="call blue reveal">
+      <b>The opportunity in one line</b>
+      <p>Build the trusted identity foundation first, connect passports immediately, give the Ministry real visibility, and recover measurable money for the state by cutting fraud and eliminating duplicate beneficiaries — a system citizens benefit from and funders will pay for.</p>
+    </div>
+  </div>
+</section>
+<div class="rule"></div>
+
+<!-- MANDATE -->
+<section class="block alt" id="mandate">
+  <div class="wrap">
+    <div class="sec-num reveal">02 — Why Now</div>
+    <h2 class="sec-h reveal">The Ministry's mandate already points here.</h2>
+    <p class="lead reveal">The timing is exceptional. In his first weeks in office, the Minister of the Interior and Decentralization has publicly staked his mandate on the exact problems this system solves.</p>
+
+    <div class="minister">
+      <div class="mcard reveal">
+        <span class="badge">The Minister</span>
+        <h3>Jean Olessongo Ondaye</h3>
+        <div class="role">Minister of the Interior &amp; Decentralization · since April 2026</div>
+        <p>A senior military officer and politician in the Republic of the Congo — a brigade general and commander of a major defense military zone — regarded for discipline and rigor. He has made the moralization of public administration and the restoration of state authority central themes of his tenure.</p>
+      </div>
+      <div class="reveal">
+        <ul class="priorities">
+          <li><span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Passport reform</b><span>Committed to streamlining passport procedures; the passport must stop being treated as a luxury.</span></div></li>
+          <li><span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Fighting passport fraud</b><span>Actively cracking down on trafficking — arrests of touts and reassignment of officers to restore document credibility.</span></div></li>
+          <li><span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Anti-corruption &amp; discipline</b><span>Pledged to confront favoritism, indiscipline, and the erosion of state authority within his ministry.</span></div></li>
+          <li><span class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Decentralization</b><span>Focused on resolving recurring dysfunctions across territorial administration.</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="call green reveal">
+      <b>Why this matters for the partnership</b>
+      <p>The system proposed here is, in effect, the infrastructure that delivers what the Minister has already promised in public: faster passports, an end to trafficking, and credible travel documents. We are not asking him to adopt a new priority — we are offering the tool that achieves the priority he has already set.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="block alt-navy" id="problem">
+  <div class="wrap">
+    <div class="sec-num reveal" style="color:#f0d488">03 — The Problem</div>
+    <h2 class="sec-h reveal">Three problems, one root cause.</h2>
+    <p class="lead reveal">Each of these traces back to a single gap — the absence of a reliable, verifiable identity for each person.</p>
+    <div class="probs">
+      <div class="prob reveal"><div class="n">01</div><h3>Passport fraud</h3><p>Without confirming an applicant is who they claim — and isn't already holding a passport under another name — duplicate and fraudulent passports are hard to prevent. Touts exploit the delays.</p></div>
+      <div class="prob reveal"><div class="n">02</div><h3>Fiscal leakage</h3><p>Public funds leak through ghost workers, duplicate or fictitious beneficiaries, and payments to the deceased. It is both a budget problem and a corruption problem.</p></div>
+      <div class="prob reveal"><div class="n">03</div><h3>Service friction</h3><p>Citizens repeatedly fill the same paper forms at clinics, banks, and offices — each institution re-collecting and re-storing the same data, badly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="block" id="how">
+  <div class="wrap">
+    <div class="sec-num reveal">04 — How It Works</div>
+    <h2 class="sec-h reveal">A foundation, and the services that plug into it.</h2>
+    <p class="lead reveal">The design separates the foundational identity layer from the functional services that use it — keeping each service simple, secure, and cheaper to launch.</p>
+
+    <div class="layers">
+      <div class="layer reveal"><div class="tag">Foundational</div><h3>The identity layer</h3><p>Establishes once that a person is a unique, real individual. Holds only the minimum needed to do that — core biographic data and the biometrics used for de-duplication.</p></div>
+      <div class="layer reveal"><div class="tag">Functional</div><h3>The service modules</h3><p>Passports first; later, others. Each module asks the foundation "is this a verified, unique person?" and works with the information relevant to that module.</p></div>
+    </div>
+
+    <p class="body-p reveal" style="margin-top:40px">Each module includes a fast, direct lookup — the everyday operational tool that lets staff serve the person in front of them without paperwork or delay. Try it:</p>
+
+    <div class="demo reveal">
+      <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="t">Passport Module — Officer Console</span></div>
+      <div class="body">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="lookup" type="text" placeholder="Type a name and press Enter — e.g. Joseph Mwana" autocomplete="off">
+        </div>
+        <div class="hint">Demonstration only — sample record. The passport officer sees passport information; other modules show only their own data.</div>
+
+        <div class="result" id="result">
+          <div class="rhead">
+            <div class="av">JM</div>
+            <div><div class="nm">Joseph Mwana</div><div class="id">NID · 404-118-2772 &nbsp;·&nbsp; Brazzaville</div></div>
+            <div class="vbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>Identity verified</div>
+          </div>
+          <div class="rgrid">
+            <div class="f"><div class="k">Application status</div><div class="v g">Approved — in production</div></div>
+            <div class="f"><div class="k">Passport no.</div><div class="v">CG-2026-088421</div></div>
+            <div class="f"><div class="k">Biometrics</div><div class="v g">Face + fingerprint matched</div></div>
+            <div class="f"><div class="k">Duplicate check</div><div class="v g">No duplicates found</div></div>
+            <div class="f"><div class="k">Date of birth</div><div class="v">14 Mar 1991</div></div>
+            <div class="f"><div class="k">Prior records</div><div class="v">1 renewal (2021)</div></div>
+          </div>
+          <div class="modnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Health, banking, and other data live in separate modules and are not visible here — each service sees only what belongs to it.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="rule"></div>
+
+<!-- MONEY -->
+<section class="block alt-navy" id="money">
+  <div class="wrap">
+    <div class="sec-num reveal" style="color:#f0d488">05 — The Return</div>
+    <h2 class="sec-h reveal">How this makes the country money.</h2>
+    <p class="lead em reveal" style="color:#f0d488">The country earns by running more efficiently and leaking less — and the return aligns perfectly with the Ministry's anti-corruption agenda.</p>
+
+    <div class="money-grid">
+      <div class="mtile reveal"><div class="big" data-count="1">$ →</div><h3>Plugging fiscal leakage</h3><p>De-duplication removes ghost workers, duplicate beneficiaries, and payments to the deceased. Typically the single largest, fastest return — and a visible anti-corruption win in year one.</p></div>
+      <div class="mtile reveal"><div class="big">+</div><h3>Broadening the tax base</h3><p>Verifiable identity brings more people and businesses into the formal, taxable economy and makes bank KYC possible.</p></div>
+      <div class="mtile reveal"><div class="big">÷</div><h3>Eliminating duplicated systems</h3><p>A shared identity layer means every new service is cheaper to launch — a direct saving the finance ministry understands.</p></div>
+      <div class="mtile reveal"><div class="big">⚡</div><h3>Faster service delivery</h3><p>Less paper, fewer in-person trips, faster passport issuance, lower administrative cost per transaction.</p></div>
+      <div class="mtile reveal"><div class="big">✓</div><h3>Restored passport integrity</h3><p>Ending trafficking protects legitimate passport-fee revenue and restores the credibility of the national travel document.</p></div>
+    </div>
+
+    <div class="money-call reveal">
+      <b>The strategic point</b>
+      <p>Fiscal leakage is money the state is already losing every month. A system that recovers even a fraction of it can pay for itself many times over — while simultaneously delivering the Minister's anti-corruption and passport-reform promises. Efficiency and integrity are the revenue engine; the data's value is realized as savings and recovered funds, not as a commodity to be sold.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="block" id="roadmap">
+  <div class="wrap">
+    <div class="sec-num reveal">06 — Roadmap &amp; Next Steps</div>
+    <h2 class="sec-h reveal">Phase One is the foundation and passports.</h2>
+    <p class="lead reveal">The highest-impact, most visible win. Later phases connect additional services — records, healthcare check-in, bank KYC — to the same foundation, each as a separate decision, so value compounds without rebuilding identity each time.</p>
+
+    <div class="steps">
+      <div class="step reveal"><div class="num">1</div><div><h3>Confirm the current state of civil registration</h3><p>Is it digital or paper? This determines whether Phase One is "modernize" or "build from zero" — the first question any funder or partner asks.</p></div></div>
+      <div class="step reveal"><div class="num">2</div><div><h3>Align partners on scope, roles, and contribution</h3><p>Set the shape of the partnership before approaching the Ministry formally.</p></div></div>
+      <div class="step reveal"><div class="num">3</div><div><h3>Open an exploratory conversation on financing</h3><p>For example, the World Bank's ID4D initiative or the African Development Bank, which fund exactly these systems.</p></div></div>
+      <div class="step reveal"><div class="num">4</div><div><h3>Develop the technical architecture and cost model</h3><p>Once the above are known, scope the Phase One build in detail.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <h2 class="reveal">The timing, the mandate, and the model all line up right now.</h2>
+  <p class="reveal">The Ministry has publicly committed to faster passports and an end to passport fraud. We can deliver exactly that — on a foundation that recovers real money for the state and opens a recurring business as more services connect over time.</p>
+  <div class="btnrow reveal">
+    <span class="btn gold show-only">Review the concept</span>
+    <span class="btn ghost show-only">See the mandate</span>
+  </div>
+</section>
+
+<footer>
+  <p class="disc">This is an early-stage concept prepared to support partner discussion. Figures and factual references should be verified before any external commitment. It is not a contract or a procurement proposal.</p>
+</footer>
+
+<script>
+// progress + nav
+const nav=document.getElementById('nav'),prog=document.getElementById('prog');
+function onScroll(){
+  const st=window.scrollY||document.documentElement.scrollTop;
+  nav.classList.toggle('scrolled',st>40);
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  prog.style.width=(h>0?(st/h)*100:0)+'%';
+}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{
+  es.forEach((e,i)=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// hero reveals immediately
+document.querySelectorAll('.hero .reveal').forEach(el=>el.classList.add('in'));
+
+// staggered card reveals
+function stagger(sel){let d=0;document.querySelectorAll(sel).forEach(c=>{c.style.transitionDelay=(d+='.06')+'s'? (d+'s'):'';});}
+['.cards .card','.money-grid .mtile','.probs .prob','.steps .step'].forEach(sel=>{
+  let d=0;document.querySelectorAll(sel).forEach(c=>{c.style.transitionDelay=(d+=0.07).toFixed(2)+'s';});
+});
+
+// lookup demo
+const inp=document.getElementById('lookup'),res=document.getElementById('result');
+function reveal(){res.classList.add('show');}
+inp.addEventListener('keydown',e=>{if(e.key==='Enter'){reveal();}});
+inp.addEventListener('input',e=>{if(e.target.value.trim().length>=3){/*wait for enter*/}});
+// auto-demo once when scrolled into view
+const demoIO=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){setTimeout(()=>{inp.value='Joseph Mwana';reveal();},650);demoIO.disconnect();}});},{threshold:.4});
+demoIO.observe(document.querySelector('.demo'));
+</script>
+</body>
+</html>
